@@ -10,7 +10,7 @@ const app = express();
 app.use(express.json());
 
 //mount routes
-app.use('/api/v1', routes);
+app.use('/api/v1/tasks', routes);
 
 app.get('/', (req, res) => {
   return res.status(200).send('Welcome to The TaskManager App.');
