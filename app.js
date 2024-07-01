@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import connection from './db/connection.js';
 import routes from './routes/tasks-route.js';
 
 const app = express();
@@ -16,11 +17,17 @@ app.get('/', (req, res) => {
   return res.status(200).send('Welcome to The TaskManager App.');
 });
 
-try {
-  const port = process.env.PORT || 3000
-  app.listen(port, () => {
-    console.log(`Server is listening on port ${port}...`);
-  });
-} catch (err) {
-  console.log('Error Encountered =>', err);
+const startServer = async () => {
+  await connection();
+
+  try {
+    const port = process.env.PORT || 3000
+    app.listen(port, () => {
+      console.log(`Server is listening on port ${port}...`);
+    });
+  } catch (err) {
+    console.log('Error Encountered =>', err);
+  }
 }
+
+startServer();
